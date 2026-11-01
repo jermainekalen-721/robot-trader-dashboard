@@ -1,7 +1,8 @@
 {
   "mode": "PAPER",
   "live_trading_enabled": false,
-  "connection": "NOT_CONFIGURED",
-  "updated_at": null,
-  "message": "Waiting for the secure Colab status feed."
+  "connection": "STATUS_FEED_CONNECTED",
+  "updated_at": "2026-11-01T04:39:40.134412+00:00",
+  "message": "Safe dashboard status updated. No orders submitted.",
+  "orders_submitted": "NONE"
 }
