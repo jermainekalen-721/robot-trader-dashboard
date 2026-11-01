@@ -1,0 +1,7 @@
+{
+  "mode": "PAPER",
+  "live_trading_enabled": false,
+  "connection": "NOT_CONFIGURED",
+  "updated_at": null,
+  "message": "Waiting for the secure Colab status feed."
+}
