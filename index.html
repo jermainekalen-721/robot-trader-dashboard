@@ -101,10 +101,52 @@
   </footer>
 </main>
 <script>
-  document.getElementById("refresh").addEventListener("click", () => {
-    document.getElementById("message").textContent =
-      "The secure status connection has not been configured yet.";
-  });
+const API_BASE = "https://robot-trader-api.jermainekalen.workers.dev";
+
+document.getElementById("refresh").addEventListener("click", async () => {
+  const password = prompt("Enter your dashboard password:");
+  if (!password) return;
+
+  const message = document.getElementById("message");
+  message.textContent = "Connecting to paper account...";
+
+  try {
+    const response = await fetch(`${API_BASE}/api/alpaca/account`, {
+      headers: { "X-Dashboard-Password": password }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Account connection failed.");
+    }
+
+    const account = data.account || {};
+    const money = value =>
+      Number(value).toLocaleString("en-US", {
+        style: "currency",
+        currency: account.currency || "USD"
+      });
+
+    document.getElementById("connection").textContent =
+      "CONNECTED — PAPER MODE";
+    document.getElementById("account").textContent =
+      account.status || "Connected";
+    document.getElementById("equity").textContent =
+      money(account.portfolio_value);
+    document.getElementById("positions").textContent =
+      "Not yet connected";
+    document.getElementById("orders").textContent =
+      "Not yet connected";
+    document.getElementById("updated").textContent =
+      "Latest account update: " + new Date().toLocaleString();
+
+    message.textContent =
+      "Paper account connected. Live trading remains disabled.";
+  } catch (error) {
+    message.textContent = "Connection error: " + error.message;
+  }
+});
 </script>
 </body>
 </html>
