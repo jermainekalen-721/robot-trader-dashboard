@@ -134,10 +134,17 @@ document.getElementById("refresh").addEventListener("click", async () => {
       account.status || "Connected";
     document.getElementById("equity").textContent =
       money(account.portfolio_value);
-    document.getElementById("positions").textContent =
-      "Not yet connected";
-    document.getElementById("orders").textContent =
-      "Not yet connected";
+    const positions = Array.isArray(data.open_positions)
+  ? data.open_positions : [];
+
+const orders = Array.isArray(data.open_orders)
+  ? data.open_orders : [];
+
+document.getElementById("positions").textContent =
+  positions.length + " open";
+
+document.getElementById("orders").textContent =
+  orders.length + " open";
     document.getElementById("updated").textContent =
       "Latest account update: " + new Date().toLocaleString();
 
